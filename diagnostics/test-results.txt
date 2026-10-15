@@ -1,0 +1,16 @@
+﻿[02:34:09] TEST 1: Unicode & Spaces Import: RUNNING - Testing non-ASCII and space characters
+[02:34:22] TEST 1: Unicode & Spaces Import: PASSED - Both Unicode and space filenames probed and imported cleanly
+[02:34:22] TEST 2: Corrupted Media Handling: RUNNING - Importing corrupted 0-byte/truncated file
+[02:34:23] TEST 2: Corrupted Media Handling: PASSED - Corrupted file rejected gracefully without crash or panic
+[02:34:23] TEST 3: Malformed Settings Resilience: RUNNING - Testing recovery from corrupted config
+[02:34:26] TEST 3: Malformed Settings Resilience: PASSED - FeatherWall running and recovered default library settings
+[02:34:27] TEST 4: Already-Running Instance Guard: RUNNING - Launching second instance
+[02:34:31] TEST 4: Already-Running Instance Guard: PASSED - Second instance detected existing instance and cleanly exited
+[02:34:31] TEST 5: 100 Rapid Pause/Resume Cycles: RUNNING - Sending 100 alternating pause/resume commands
+[02:34:53] TEST 5: 100 Rapid Pause/Resume Cycles: PASSED - Completed 100 rapid cycles in 21616 ms (0 failures, 0 deadlocks)
+[02:34:53] TEST 6: 100 Rapid Wallpaper Switches & Leak Check: RUNNING - Switching between media and still 100 times
+[02:35:18] TEST 6: 100 Rapid Wallpaper Switches: PASSED - Completed 100 switches in 25167 ms. Handle delta: 3, WorkingSet delta: 0.03 MB
+[02:35:18] TEST 7: Graceful Application Shutdown: RUNNING - Stopping FeatherWall via fwctl exit
+[02:35:19] TEST 7: Graceful Application Shutdown: PASSED - Process terminated cleanly in 1348 ms with no orphaned windows
+[02:35:19] TEST 8: Build Artifact Verification: RUNNING - Verifying executables exist and have valid PE headers
+[02:35:19] TEST 8: Build Artifact Verification: PASSED - featherwall.exe (452608 bytes) and fwctl.exe (368128 bytes) verified

@@ -1,0 +1,24 @@
+﻿================================================================================
+FEATHERWALL BENCHMARK SYSTEM SPECIFICATIONS
+================================================================================
+Timestamp: 2026-10-15 03:49:37
+Operating System: Microsoft Windows 10 Home (Version: 10.0.19045, Build: 19045, 64-bit)
+CPU Model: AMD Ryzen 7 5800U with Radeon Graphics         
+Physical Cores: 8
+Logical Processors: 16
+Total RAM: 16 GB
+
+Graphics Adapters:
+  - Parsec Virtual Display Adapter | Driver: 0.45.0.0 | Mode: 
+  - Meta Virtual Monitor | Driver: 11.1.45.729 | Mode: 
+  - NVIDIA GeForce RTX 3050 Ti Laptop GPU | Driver: 32.0.15.9571 | Mode: 
+  - AMD Radeon(TM) Graphics | Driver: 31.0.21923.11000 | Mode: 1920 x 1080 x 4294967296 colors
+
+Connected Displays:
+  - Display Count: 3 (DISPLAY3 Primary: 1920x1080@60Hz, DISPLAY1, DISPLAY2)
+Power Configuration:
+  - AC Connected: True
+  - Battery Saver: False
+Hardware Decoding:
+  - Windows Media Foundation H.264 DXVA2 / D3D11 / NVDEC / AMD VCN capable
+================================================================================

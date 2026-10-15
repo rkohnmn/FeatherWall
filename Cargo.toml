@@ -1,0 +1,18 @@
+[package]
+name = "featherwall"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Lightweight native Windows animated wallpaper manager"
+
+[dependencies]
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+opt-level = "s"
+strip = "symbols"
+panic = "abort"
+
+[package.metadata]
+windows-target = "x86_64-pc-windows-msvc"

@@ -1,0 +1,8 @@
+/target/
+/dist/
+/FeatherWall-Release/
+*.log
+*.tmp
+*.fwcfg
+.DS_Store
+Thumbs.db
