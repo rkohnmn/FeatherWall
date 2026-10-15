@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="410 175 575 510" role="img" aria-label="FeatherWall app icon">
+  <title>FeatherWall app icon</title>
+  <defs>
+    <linearGradient id="panel" x1="0.12" y1="0" x2="0.84" y2="1" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#416FAE"/>
+      <stop offset="44%" stop-color="#254A7C"/>
+      <stop offset="100%" stop-color="#18283F"/>
+    </linearGradient>
+    <linearGradient id="feather" x1="0" y1="1" x2="0.96" y2="0" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#FBFDFF"/>
+      <stop offset="42%" stop-color="#E4F0FF"/>
+      <stop offset="76%" stop-color="#BDD9FF"/>
+      <stop offset="100%" stop-color="#82B8FF"/>
+    </linearGradient>
+    <linearGradient id="rear" x1="0" y1="0" x2="1" y2="1" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#CEE4FF" stop-opacity=".92"/>
+      <stop offset="100%" stop-color="#8DBCF2" stop-opacity=".62"/>
+    </linearGradient>
+    <linearGradient id="furthest" x1="0" y1="0" x2="1" y2="1" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#E7F2FF" stop-opacity=".90"/>
+      <stop offset="100%" stop-color="#C1DBFA" stop-opacity=".42"/>
+    </linearGradient>
+  </defs>
+  <g id="brandmark" aria-label="Layered desktop panels and a lightweight feather">
+    <!-- Layered translucent desktop surfaces -->
+    <path d="M 468,297 C 455,289 443,298 443,317 L 443,540 C 443,555 451,568 469,575 L 580,622 L 579,336 Z"
+          fill="url(#furthest)"/>
+    <path d="M 527,241 C 512,237 503,248 503,266 L 503,560 C 503,581 511,595 529,602 L 579,623 L 603,271 Z"
+          fill="url(#rear)"/>
+    <!-- Main wallpaper panel: single uninterrupted silhouette -->
+    <path d="M 601,194 C 586,190 576,202 576,220 L 576,623 C 576,644 582,660 591,668 L 887,603 C 905,600 916,590 916,571 L 916,311 C 916,299 909,294 894,289 Z"
+          fill="url(#panel)"/>
+    <!-- Organic feather body: motion is conveyed in the contour, not effects -->
+    <path d="M 587,661
+             C 606,598 619,498 652,449
+             C 660,433 670,419 681,412
+             L 675,455
+             C 704,393 752,375 807,354
+             C 861,334 899,308 918,250
+             C 934,307 942,358 916,418
+             C 898,460 863,484 789,507
+             C 819,507 840,503 854,497
+             C 837,532 791,550 735,565
+             C 674,582 625,611 587,661 Z"
+          fill="url(#feather)"/>
+    <!-- A precise, sculpted quill defined in negative space -->
+    <path d="M 588,665
+             C 613,616 643,575 684,533
+             C 743,472 814,422 872,370
+             C 826,426 764,474 712,520
+             C 655,570 613,624 588,665 Z"
+          fill="#1B3457"/>
+    <!-- Fine separation between the two feather vanes -->
+    <path d="M 630,620 C 671,566 716,527 767,498 C 719,529 665,574 630,620 Z"
+          fill="#A7CDFA" opacity=".65"/>
+  </g>
+</svg>

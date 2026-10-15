@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+  width="1050" height="740" viewBox="205 170 1050 740" role="img"
+  aria-label="FeatherWall logo – stylized feather crossing layered desktop wallpaper panels with FeatherWall wordmark">
+  <title>FeatherWall</title>
+  <defs>
+    <linearGradient id="panel" x1="0.12" y1="0" x2="0.84" y2="1" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#416FAE"/>
+      <stop offset="44%" stop-color="#254A7C"/>
+      <stop offset="100%" stop-color="#18283F"/>
+    </linearGradient>
+    <linearGradient id="feather" x1="0" y1="1" x2="0.96" y2="0" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#FBFDFF"/>
+      <stop offset="42%" stop-color="#E4F0FF"/>
+      <stop offset="76%" stop-color="#BDD9FF"/>
+      <stop offset="100%" stop-color="#82B8FF"/>
+    </linearGradient>
+    <linearGradient id="rear" x1="0" y1="0" x2="1" y2="1" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#CEE4FF" stop-opacity=".92"/>
+      <stop offset="100%" stop-color="#8DBCF2" stop-opacity=".62"/>
+    </linearGradient>
+    <linearGradient id="furthest" x1="0" y1="0" x2="1" y2="1" objectBoundingBox="true">
+      <stop offset="0%" stop-color="#E7F2FF" stop-opacity=".90"/>
+      <stop offset="100%" stop-color="#C1DBFA" stop-opacity=".42"/>
+    </linearGradient>
+  </defs>
+  <g id="brandmark" aria-label="Layered desktop panels and a lightweight feather">
+    <!-- Layered translucent desktop surfaces -->
+    <path d="M 468,297 C 455,289 443,298 443,317 L 443,540 C 443,555 451,568 469,575 L 580,622 L 579,336 Z"
+          fill="url(#furthest)"/>
+    <path d="M 527,241 C 512,237 503,248 503,266 L 503,560 C 503,581 511,595 529,602 L 579,623 L 603,271 Z"
+          fill="url(#rear)"/>
+    <!-- Main wallpaper panel: single uninterrupted silhouette -->
+    <path d="M 601,194 C 586,190 576,202 576,220 L 576,623 C 576,644 582,660 591,668 L 887,603 C 905,600 916,590 916,571 L 916,311 C 916,299 909,294 894,289 Z"
+          fill="url(#panel)"/>
+    <!-- Organic feather body: motion is conveyed in the contour, not effects -->
+    <path d="M 587,661
+             C 606,598 619,498 652,449
+             C 660,433 670,419 681,412
+             L 675,455
+             C 704,393 752,375 807,354
+             C 861,334 899,308 918,250
+             C 934,307 942,358 916,418
+             C 898,460 863,484 789,507
+             C 819,507 840,503 854,497
+             C 837,532 791,550 735,565
+             C 674,582 625,611 587,661 Z"
+          fill="url(#feather)"/>
+    <!-- A precise, sculpted quill defined in negative space -->
+    <path d="M 588,665
+             C 613,616 643,575 684,533
+             C 743,472 814,422 872,370
+             C 826,426 764,474 712,520
+             C 655,570 613,624 588,665 Z"
+          fill="#1B3457"/>
+    <!-- Fine separation between the two feather vanes -->
+    <path d="M 630,620 C 671,566 716,527 767,498 C 719,529 665,574 630,620 Z"
+          fill="#A7CDFA" opacity=".65"/>
+  </g>
+  <g id="wordmark" aria-label="FeatherWall" transform="translate(255 850) scale(0.0830078125 -0.0830078125)">
+    <path transform="translate(0.0000,0)" fill="#1B2A41" d="M124 0H388V630H1073V854H388V1261H1126V1490H124Z"/>
+    <path transform="translate(1123.8118,0)" fill="#1B2A41" d="M578 -24C825 -24 1021 119 1061 326H825C796 236 711 175 584 175C414 175 316 290 310 462H1074V531C1074 855 872 1080 568 1080C272 1080 63 848 63 527C63 207 261 -24 578 -24ZM312 636C329 787 426 880 572 880C718 880 816 787 832 636Z"/>
+    <path transform="translate(2208.6235,0)" fill="#1B2A41" d="M434 -17C606 -17 695 55 745 149H749V0H997V720C997 940 834 1077 559 1077C283 1077 111 938 99 728H342C349 817 431 881 554 881C675 881 747 817 747 727V719C747 647 680 644 484 622C266 599 69 540 69 300C69 89 224 -17 434 -17ZM496 170C386 170 315 219 315 302C315 398 407 437 515 453C619 469 717 485 748 505V391C748 268 661 170 496 170Z"/>
+    <path transform="translate(3268.4353,0)" fill="#1B2A41" d="M669 1056H454V1344H201V1056H17V853H201V266C201 85 302 0 517 0H669V203H561C479 203 454 228 454 303V853H669Z"/>
+    <path transform="translate(3936.2471,0)" fill="#1B2A41" d="M364 597C364 777 463 856 595 856C730 856 808 775 808 620V0H1061V660C1061 931 905 1077 684 1077C542 1077 436 1016 364 901V1490H112V0H364Z"/>
+    <path transform="translate(5061.0588,0)" fill="#1B2A41" d="M578 -24C825 -24 1021 119 1061 326H825C796 236 711 175 584 175C414 175 316 290 310 462H1074V531C1074 855 872 1080 568 1080C272 1080 63 848 63 527C63 207 261 -24 578 -24ZM312 636C329 787 426 880 572 880C718 880 816 787 832 636Z"/>
+    <path transform="translate(6145.8706,0)" fill="#1B2A41" d="M112 0H364V598C364 763 457 846 577 846C627 846 677 841 696 838V1062C676 1064 648 1066 614 1066C478 1066 397 1002 358 881H355V1056H112Z"/>
+    <path transform="translate(6826.6824,0)" fill="#76859A" d="M415 0H715L942 862C964 944 983 1033 1004 1132C1025 1033 1044 944 1066 862L1294 0H1593L1996 1490H1716L1519 687C1489 558 1461 429 1435 301C1408 429 1379 558 1347 687L1144 1490H865L660 687C628 557 599 427 572 296C547 427 519 557 489 687L292 1490H13Z"/>
+    <path transform="translate(8787.4941,0)" fill="#76859A" d="M434 -17C606 -17 695 55 745 149H749V0H997V720C997 940 834 1077 559 1077C283 1077 111 938 99 728H342C349 817 431 881 554 881C675 881 747 817 747 727V719C747 647 680 644 484 622C266 599 69 540 69 300C69 89 224 -17 434 -17ZM496 170C386 170 315 219 315 302C315 398 407 437 515 453C619 469 717 485 748 505V391C748 268 661 170 496 170Z"/>
+    <path transform="translate(9847.3059,0)" fill="#76859A" d="M364 1490H112V0H364Z"/>
+    <path transform="translate(10275.1176,0)" fill="#76859A" d="M364 1490H112V0H364Z"/>
+  </g>
+</svg>

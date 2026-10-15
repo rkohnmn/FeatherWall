@@ -124,8 +124,10 @@ unsafe extern "system" fn overlay_wnd_proc(
         f::WM_WINDOWPOSCHANGING => {
             // Keep the overlay window permanently at the bottom of the Z-order,
             // anchored directly behind normal applications!
-            let wp = &mut *(l as *mut f::WINDOWPOS);
-            wp.hwndInsertAfter = f::HWND_BOTTOM;
+            if l != 0 {
+                let wp = &mut *(l as *mut f::WINDOWPOS);
+                wp.hwndInsertAfter = f::HWND_BOTTOM;
+            }
             0
         }
 

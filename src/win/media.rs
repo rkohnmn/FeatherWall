@@ -221,3 +221,14 @@ pub fn open_spotify() {
         f::ShellExecuteW(0, f::wide("open").as_ptr(), uri.as_ptr(), ptr::null(), ptr::null(), 1);
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_query_media() {
+        let s = query_media_session(true, true);
+        println!("Media state: {:?}", s);
+    }
+}

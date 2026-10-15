@@ -117,7 +117,7 @@ struct App {
     surfaces: Vec<Surface>,
     host: f::HWND,
     ui: UiState,
-    widgets_overlay: Option<overlay::WidgetOverlayManager>,
+    widgets_overlay: Option<Box<overlay::WidgetOverlayManager>>,
     worker: Option<Worker>,
     worker_status: String,
     worker_progress: u8,
@@ -309,6 +309,12 @@ fn register_class(
     instance: f::HINSTANCE,
 ) -> Result<(), String> {
     let name = f::wide(name);
+    let app_icon = unsafe { f::LoadIconW(instance, 1usize as *const u16) };
+    let icon = if app_icon != 0 {
+        app_icon
+    } else {
+        unsafe { f::LoadIconW(0, 32512usize as *const u16) }
+    };
     let class = f::WNDCLASSEXW {
         cbSize: std::mem::size_of::<f::WNDCLASSEXW>() as u32,
         style: 0,
@@ -316,12 +322,12 @@ fn register_class(
         cbClsExtra: 0,
         cbWndExtra: 0,
         hInstance: instance,
-        hIcon: unsafe { f::LoadIconW(0, 32512usize as *const u16) },
+        hIcon: icon,
         hCursor: unsafe { f::LoadCursorW(0, 32512usize as *const u16) },
         hbrBackground: 0,
         lpszMenuName: ptr::null(),
         lpszClassName: name.as_ptr(),
-        hIconSm: 0,
+        hIconSm: icon,
     };
     if unsafe { f::RegisterClassExW(&class) } == 0 {
         return Err(format!("Cannot register window class (Win32 {})", unsafe {
@@ -405,6 +411,11 @@ fn launch_gui(root: PathBuf) -> Result<(), String> {
     }
     unsafe {
         f::DragAcceptFiles(hwnd, 1);
+        let app_icon = f::LoadIconW(instance, 1usize as *const u16);
+        if app_icon != 0 {
+            f::SendMessageW(hwnd, 0x0080, 1, app_icon as isize);
+            f::SendMessageW(hwnd, 0x0080, 0, app_icon as isize);
+        }
     }
     WINDOW.store(hwnd, Ordering::Release);
     let mut library = core::load(&root.join("library.fwcfg"));
@@ -414,10 +425,11 @@ fn launch_gui(root: PathBuf) -> Result<(), String> {
 
     let monitor_list = desktop::monitors();
     let widgets_overlay = match overlay::WidgetOverlayManager::new(instance, library.widgets.clone()) {
-        Ok(mut mgr) => {
-            mgr.register_global();
-            mgr.sync_monitors(&monitor_list);
-            Some(mgr)
+        Ok(mgr) => {
+            let mut boxed = Box::new(mgr);
+            boxed.register_global();
+            boxed.sync_monitors(&monitor_list);
+            Some(boxed)
         }
         Err(err) => {
             logfile(&root, &format!("Failed to initialize widget overlay: {err}"));
@@ -445,7 +457,14 @@ fn launch_gui(root: PathBuf) -> Result<(), String> {
         sleep: false,
         exiting: false,
         tray_msg: WM_TRAY,
-        tray_icon: unsafe { f::LoadIconW(0, 32512usize as *const u16) },
+        tray_icon: {
+            let app_icon = unsafe { f::LoadIconW(instance, 1usize as *const u16) };
+            if app_icon != 0 {
+                app_icon
+            } else {
+                unsafe { f::LoadIconW(0, 32512usize as *const u16) }
+            }
+        },
         taskbar_message: unsafe { f::RegisterWindowMessageW(f::wide("TaskbarCreated").as_ptr()) },
         hook: 0,
         power_notify: 0,
@@ -459,6 +478,9 @@ fn launch_gui(root: PathBuf) -> Result<(), String> {
     APPLICATION.with(|cell| cell.replace(Some(app)));
     APPLICATION.with(|cell| {
         if let Some(app) = cell.borrow_mut().as_mut() {
+            if let Some(mgr) = app.widgets_overlay.as_mut() {
+                mgr.register_global();
+            }
             app.initialize_ui();
             app.register_notifications();
             app.install_tray();
@@ -2098,6 +2120,7 @@ impl App {
         self.clear_surfaces();
         if let Some(mut mgr) = self.widgets_overlay.take() {
             mgr.destroy_all();
+            overlay::WidgetOverlayManager::unregister_global();
         }
         self.remove_tray();
         unsafe {

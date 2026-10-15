@@ -1,6 +1,8 @@
-# 🪶 FeatherWall
-
 <div align="center">
+
+<img src="assets/icon.png" alt="FeatherWall Icon" width="128" height="128" />
+
+# 🪶 FeatherWall
 
 ![FeatherWall Banner](https://img.shields.io/badge/FEATHERWALL-Native_Windows_Desktop_Suite-6366F1?style=for-the-badge&logo=windows&logoColor=white)
 
@@ -16,6 +18,7 @@
 *Say goodbye to 800 MB Chromium processes, micro-stuttering during gameplay, and battery-draining render loops. FeatherWall unites hardware-accelerated video wallpaper presentation with an elegant, floating Simple Clean desktop information overlay at effectively zero runtime cost.*
 
 [Key Highlights](#-key-highlights) •
+[Screenshots](#-visual-showcase--screenshots) •
 [The Engineering Story](#-the-systems-engineering-story) •
 [Desktop Widget Overlay](#-desktop-information-overlay-simple-clean-aesthetic) •
 [Wallpaper Engine](#-hardware-accelerated-wallpaper-engine) •
@@ -65,6 +68,26 @@ Built entirely from scratch in native Rust directly over the raw Windows 32-bit 
 - 🎧 **Zero-Dependency Local Spotify Control**: Detects Spotify window titles (`Chrome_WidgetWin_0`) and queries local Windows media sessions. Controls playback via `WM_APPCOMMAND` and hardware media keys (`VK_MEDIA_*`) without requiring Spotify Web API OAuth tokens, internet connections, or Chromium runtimes.
 - 🛡 **Smart Suspension Policies**: Automatically pauses video playback and kills overlay redraw timers when fullscreen games/apps are active, the screen turns off, or the session locks.
 - 📦 **Compact Self-Contained Footprint**: Standalone executable weighs **just 581 KB** with 0 external runtime dependencies. Cold launches in under 170 ms.
+
+---
+
+## 📸 Visual Showcase & Screenshots
+
+<div align="center">
+
+### 🌌 Floating Desktop Information Overlay (*Simple Clean* Aesthetic)
+*High-elegance digital clock, dynamic localized date, personalized rotating greeting, and frosted Spotify music capsule running live over the desktop with 0.00% idle CPU and seamless desktop icon click-through.*
+
+<img src="Screenshots/desktop.png" alt="FeatherWall Desktop Overlay Live on Windows 11" width="920" />
+
+<br/><br/>
+
+### 🎨 Native Windows 11 Fluent UI Customization Studio
+*Immediate-mode GDI double-buffered customizer with real-time preview simulation, typography controls, Spotify media toggles, and live performance telemetry.*
+
+<img src="Screenshots/Home.png" alt="FeatherWall Fluent Customization Studio" width="850" />
+
+</div>
 
 ---
 
