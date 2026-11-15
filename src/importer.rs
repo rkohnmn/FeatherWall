@@ -75,8 +75,10 @@ pub fn parse_probe(text: &str) -> Result<Probe, String> {
                     "video" if !video_seen => {
                         video_seen = true;
                         result.codec = get("codec_name").into();
-                        result.width = numeric(get("width")) as u32;
-                        result.height = numeric(get("height")) as u32;
+                        // Reject dimensions that do not fit a Win32-friendly u32.
+                        // Truncating 4,294,967,297 to 1 must never create a media plan.
+                        result.width = numeric(get("width")).try_into().unwrap_or(0);
+                        result.height = numeric(get("height")).try_into().unwrap_or(0);
                         result.pix_fmt = get("pix_fmt").into();
                         result.bits = numeric(get("bits_per_raw_sample")) as u32;
                         result.frames = numeric(get("nb_frames"));
@@ -414,6 +416,12 @@ fn spawn_encoder(
     result.map_err(|e| format!("{e}. {}", last_error(&errors)))
 }
 
+// Renaming directly over the previous cache entry preserves the old asset
+// if the new one cannot be installed. Removing it first introduces a data-loss window.
+fn finalize_asset(temporary: &Path, asset: &Path) -> io::Result<()> {
+    fs::rename(temporary, asset)
+}
+
 pub fn import(
     input: &Path,
     root: &Path,
@@ -490,10 +498,8 @@ pub fn import(
         if validation.kind != p.kind {
             return Err("FFmpeg output changed the media type".into());
         }
-        if asset.exists() {
-            fs::remove_file(&asset).map_err(|e| e.to_string())?;
-        }
-        fs::rename(&temporary, &asset).map_err(|e| format!("Cache finalization failed: {e}"))?;
+        finalize_asset(&temporary, &asset)
+            .map_err(|e| format!("Cache finalization failed: {e}"))?;
     }
     let thumb = directory.join(format!("{id}.thumb.bmp"));
     if !thumb.is_file() {
@@ -518,7 +524,13 @@ pub fn import(
 }
 
 pub fn generate_thumbnail(input: &Path, output: &Path, is_video: bool) -> Result<(), String> {
-    let mut cmd = Command::new(program("ffmpeg"));
+    generate_thumbnail_with_program(&program("ffmpeg"), input, output, is_video)
+}
+
+fn generate_thumbnail_with_program(
+    executable: &Path, input: &Path, output: &Path, is_video: bool,
+) -> Result<(), String> {
+    let mut cmd = Command::new(executable);
     cmd.arg("-y");
     if is_video {
         cmd.arg("-ss").arg("00:00:00.500");
@@ -536,8 +548,11 @@ pub fn generate_thumbnail(input: &Path, output: &Path, is_video: bool) -> Result
         Ok(s) => s,
         Err(e) => return Err(e.to_string()),
     };
-    if !status.success() && is_video {
-        let mut retry = Command::new(program("ffmpeg"));
+    if !status.success() {
+        if !is_video {
+            return Err("Thumbnail extraction failed".into());
+        }
+        let mut retry = Command::new(executable);
         retry
             .arg("-y")
             .arg("-ss")
@@ -561,6 +576,9 @@ pub fn generate_thumbnail(input: &Path, output: &Path, is_video: bool) -> Result
         if !retry_status.success() {
             return Err("Thumbnail extraction failed".into());
         }
+    }
+    if fs::metadata(output).map(|m| m.len() == 0).unwrap_or(true) {
+        return Err("Thumbnail extraction produced no usable image".into());
     }
     Ok(())
 }
@@ -619,6 +637,46 @@ mod tests {
     fn reject_invalid() {
         assert!(parse_probe("[FORMAT]\nformat_name=mp3\n[/FORMAT]").is_err());
     }
+    #[test]
+    fn rejects_video_dimensions_that_overflow_u32() {
+        let text = "[STREAM]\ncodec_type=video\ncodec_name=h264\nwidth=4294967297\nheight=1080\n[/STREAM]\n[FORMAT]\nformat_name=mp4\n[/FORMAT]";
+        assert!(parse_probe(text).is_err());
+    }
+
+    #[test]
+    fn cache_finalize_does_not_delete_previous_asset_on_failure() {
+        let root = std::env::temp_dir().join(format!("featherwall-finalize-{}", std::process::id()));
+        fs::create_dir_all(&root).unwrap();
+        let asset = root.join("existing.mp4");
+        let temporary = root.join("new.partial.mp4");
+        fs::write(&asset, b"previous valid asset").unwrap();
+        assert!(finalize_asset(&temporary, &asset).is_err());
+        assert_eq!(fs::read(&asset).unwrap(), b"previous valid asset".to_vec());
+        fs::write(&temporary, b"new valid asset").unwrap();
+        finalize_asset(&temporary, &asset).unwrap();
+        assert_eq!(fs::read(&asset).unwrap(), b"new valid asset".to_vec());
+        assert!(!temporary.exists());
+        fs::remove_dir_all(root).unwrap();
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn failed_still_thumbnail_process_is_reported() {
+        use std::os::unix::fs::PermissionsExt;
+        let root = std::env::temp_dir().join(format!("featherwall-thumbnail-{}", std::process::id()));
+        fs::create_dir_all(&root).unwrap();
+        let executable = root.join("ffmpeg-fails.sh");
+        fs::write(&executable, b"#!/bin/sh\nexit 1\n").unwrap();
+        let mut permissions = fs::metadata(&executable).unwrap().permissions();
+        permissions.set_mode(0o700);
+        fs::set_permissions(&executable, permissions).unwrap();
+        let result = generate_thumbnail_with_program(
+            &executable, &root.join("source.png"), &root.join("thumb.bmp"), false,
+        );
+        assert!(result.unwrap_err().contains("Thumbnail extraction failed"));
+        fs::remove_dir_all(root).unwrap();
+    }
+
     #[test]
     fn safe_cleanup() {
         let root = std::env::temp_dir().join(format!("featherwall-clean-{}", std::process::id()));
